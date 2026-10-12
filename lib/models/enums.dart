@@ -1,7 +1,7 @@
 /// ENUMS = a fixed list of allowed choices.
 /// Example: a service can only be healthy, degraded or down - nothing else.
 
-enum Health { healthy, degraded, down }
+enum Health { idle, healthy, degraded, down }
 
 /// The three faults we can inject.
 /// Same names as the FaultType enum in your real Inventory service.

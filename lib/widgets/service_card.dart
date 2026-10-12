@@ -26,11 +26,13 @@ class ServiceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final h = sage.health(s.name);
     final color = switch (h) {
+      Health.idle => AppColors.muted,
       Health.healthy => AppColors.good,
       Health.degraded => AppColors.warn,
       Health.down => AppColors.bad,
     };
     final label = switch (h) {
+      Health.idle => 'Idle',
       Health.healthy => 'Healthy',
       Health.degraded => 'Degraded',
       Health.down => 'Down',
@@ -42,7 +44,7 @@ class ServiceCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.panel2,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: h == Health.healthy ? AppColors.border : color.withOpacity(0.7)),
+        border: Border.all(color: (h == Health.healthy || h == Health.idle) ? AppColors.border : color.withOpacity(0.7)),
       ),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(children: [

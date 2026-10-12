@@ -21,12 +21,12 @@ class ArchitecturePage extends StatelessWidget {
     Stage('Demo microservices', 'The shops',
         'Order, Inventory and Payment (Spring Boot) with built-in fault injection.', 'Built'),
     Stage('Kafka event pipeline', 'The wire to the control room',
-        'Each request timing is published to sage.metrics. Inventory publishes today; Order and Payment are next.',
-        'In progress'),
-    Stage('Redis anomaly detection', 'The notepad of normal',
-        'Keeps a rolling baseline per service and flags sudden jumps (z-score).', 'Planned'),
+        'Each request timing is published to sage.metrics by the three services and consumed by the detector.',
+        'Built'),
+    Stage('Anomaly detection', 'The notepad of normal',
+        'Keeps the last 30 readings per service and flags slow or failing services (live in the detector; Redis baseline planned).', 'Built'),
     Stage('Incident correlation', 'Which shop is the real cause?',
-        'Groups linked anomalies into one incident using the service dependency map.', 'Planned'),
+        'Groups linked anomalies into one incident using the service dependency map (live).', 'Built'),
     Stage('pgvector knowledge base', "The detective's old case files",
         'Searches past incidents by meaning and only trusts matches of 0.75 or higher.', 'Planned'),
     Stage('Spring AI diagnosis', 'The AI detective',
@@ -39,7 +39,7 @@ class ArchitecturePage extends StatelessWidget {
     Stage('Keycloak authentication', 'The badge check',
         'Viewer and Admin roles. This prototype uses a mock login.', 'Planned'),
     Stage('Flutter dashboard', 'The control-room screen',
-        'This app. It runs on simulated data so the full idea can be shown before the backend is finished.',
+        'This app. Services, incidents and fault injection are live from the detector; similarity search, AI and safety gate are still simulated.',
         'Prototype'),
   ];
 
@@ -90,10 +90,11 @@ class ArchitecturePage extends StatelessWidget {
       const Panel(
         title: 'What is real and what is simulated here',
         child: Text(
-          'Real: the three Spring Boot microservices and the cascade failure between them. '
-          'Simulated in this prototype: the metric stream, anomaly detection, similarity search, AI diagnosis, '
-          'safety gate and Kubernetes actions. The rules they follow (0.75 similarity threshold, 85% confidence '
-          'gate, whitelisted actions only) are the same ones the real backend will use.',
+          'Real: the three Spring Boot microservices, the Kafka metric stream, anomaly detection, root-cause '
+          'correlation, fault injection and the fix button (it clears the fault). '
+          'Simulated in this prototype: pgvector similarity search, the AI diagnosis, the confidence score, the safety '
+          'gate decision and the Kubernetes command text. The rules they follow (0.75 similarity threshold, 85% '
+          'confidence gate, whitelisted actions only) are the ones the real backend will use.',
           style: TextStyle(color: AppColors.muted, height: 1.5),
         ),
       ),

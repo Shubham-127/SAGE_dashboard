@@ -168,10 +168,12 @@ class _ShellState extends State<Shell> {
               style: const TextStyle(
                   fontSize: 20, fontWeight: FontWeight.w800, color: AppColors.text)),
         ),
-        // if (showSim) ...[
-        //   const Pill('Simulated data, no live backend', AppColors.warn, icon: Icons.science_outlined),
-        //   const SizedBox(width: 10),
-        // ],
+        if (showSim) ...[
+          Pill(sage.online ? 'Live: detector connected' : 'Detector offline',
+              sage.online ? AppColors.good : AppColors.bad,
+              icon: Icons.sensors),
+          const SizedBox(width: 10),
+        ],
         Pill(isAdmin ? 'Admin' : 'Viewer (read-only)', AppColors.accent, icon: Icons.lock_outline),
       ]),
     );

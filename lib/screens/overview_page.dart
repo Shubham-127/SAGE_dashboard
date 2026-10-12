@@ -26,6 +26,23 @@ class OverviewPage extends StatelessWidget {
       final pipeline = PipelinePanel();
 
       return Column(children: [
+        if (!sage.online) ...[
+          const Panel(
+            title: 'Detector offline',
+            child: Text(
+                'The dashboard cannot reach http://localhost:8090. Start detector-service and this page recovers by itself.',
+                style: TextStyle(color: AppColors.bad, height: 1.4)),
+          ),
+          const SizedBox(height: 16),
+        ] else if (sage.allIdle) ...[
+          const Panel(
+            title: 'Detector is up, but no traffic is arriving',
+            child: Text(
+                'All services are idle. Check that Inventory, Order and Payment are running; the detector sends a test order every 2 seconds.',
+                style: TextStyle(color: AppColors.warn, height: 1.4)),
+          ),
+          const SizedBox(height: 16),
+        ],
         // 1. the four numbers
         ResponsiveGrid(maxCols: 4, children: [
           Kpi('Services healthy', '$healthy of $total',
